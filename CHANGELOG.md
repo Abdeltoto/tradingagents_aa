@@ -2,6 +2,22 @@
 
 All notable changes to TradingAgents are documented here.
 
+## [Unreleased] — TradingDesk
+
+Visual transfer of the CLI onto a trading-floor UI. Same graph, same `MessageBuffer`, same files.
+
+### Added
+
+- TradingDesk (`python -m webui`, extra `[web]`, script `tradingdesk`): FastAPI desk + SPA. The war room is the CLI’s `Rich.Live` layout pushed over WebSocket (agent table → cards, Messages & Tools → feed, Current Report → tabs, footer → live stats). Quote bar, report archive, backtest page, `.env` settings, Ollama auto-detect.
+- README chapter *Du CLI à la salle* / *From CLI to floor*: real CLI captures (`assets/cli/`) mapped to desk surfaces, plus a full list of fork additions (engine unchanged).
+- Docs in French (plus `README.en.md`): start, architecture, CLI, providers, data, backtest, FAQ, disclaimer.
+- Marketing kit: `assets/marketing/` (hero, transfer plates, OG, mark, war room, desk screenshot), GitHub issue templates, positioning copy.
+
+### Notes
+
+- The interactive CLI still needs a real Windows console buffer. The desk does not.
+- Upstream engine, vendors and agents are unchanged; credit Tauric Research / arXiv 2412.20138.
+
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Changes that need action when upgrading are listed under "Upgrading from" in their release.

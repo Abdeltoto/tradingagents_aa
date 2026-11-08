@@ -1,8 +1,8 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
-  - name: Questions and showcases
-    url: https://github.com/TauricResearch/TradingAgents/discussions
-    about: Usage questions, ideas, and projects built on TradingAgents
-  - name: Security vulnerability
-    url: https://github.com/TauricResearch/TradingAgents/security/advisories/new
-    about: Report privately; please do not open a public issue
+  - name: TradingAgents upstream
+    url: https://github.com/TauricResearch/TradingAgents
+    about: Moteur, vendors, papier — le dépôt d’origine
+  - name: Documentation
+    url: https://github.com/Abdeltoto/tradingagents_aa/blob/main/docs/README.md
+    about: Guides Desk, CLI, config

@@ -1,0 +1,24 @@
+name: Idée
+description: Une surface produit, pas un rewrite du papier
+title: "[idea] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: job
+    attributes:
+      label: Job-to-be-done
+      description: Qui, dans quelle situation, veut quoi.
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Couche
+      options: [TradingDesk (UI/API), CLI, Docs / marketing, Moteur (préférer upstream)]
+    validations:
+      required: true
+  - type: textarea
+    id: out
+    attributes:
+      label: Hors scope
+      description: Ce que cette idée ne doit pas devenir (ex. un courtier).

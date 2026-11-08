@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TradingDesk — TradingAgents</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <aside class="rail">
+    <div class="brand">
+      <span class="mark">TA</span>
+      <div>
+        <strong>TradingDesk</strong>
+        <em>TradingAgents visual firm</em>
+      </div>
+    </div>
+    <nav>
+      <button data-view="desk" class="active">Desk</button>
+      <button data-view="analyze">Nouvelle analyse</button>
+      <button data-view="warroom">Salle des marchés</button>
+      <button data-view="reports">Rapports</button>
+      <button data-view="backtest">Backtest</button>
+      <button data-view="settings">Réglages</button>
+    </nav>
+    <div class="rail-foot" id="live-chip">En attente</div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <p class="kicker" id="kicker">Desk</p>
+        <h1 id="headline">Le même moteur que le CLI, en salle de marché.</h1>
+      </div>
+      <div class="top-meta" id="clock"></div>
+    </header>
+
+    <section id="view-desk" class="view active">
+      <div class="hero-grid">
+        <article class="panel quote-card">
+          <form id="quote-form" class="inline">
+            <label>Ticker
+              <input id="quote-ticker" value="SPY" autocomplete="off" />
+            </label>
+            <button type="submit" class="ghost">Coter</button>
+          </form>
+          <div id="quote-box" class="quote-box">
+            <p class="muted">Entrez un ticker pour ancrer le desk.</p>
+          </div>
+        </article>
+        <article class="panel">
+          <h2>Lancer une analyse</h2>
+          <p class="lede">Quatre analystes, un débat, un trader, un comité de risque, un portfolio manager — le workflow du CLI, sans terminal.</p>
+          <button class="primary" data-go="analyze">Composer une run</button>
+        </article>
+      </div>
+      <div class="split">
+        <article class="panel">
+          <h2>Runs en cours</h2>
+          <div id="live-list" class="list"></div>
+        </article>
+        <article class="panel">
+          <h2>Dernières décisions</h2>
+          <div id="saved-list" class="list"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-analyze" class="view">
+      <form id="analyze-form" class="sheet">
+        <div class="row">
+          <label>Ticker
+            <input name="ticker" value="SPY" required />
+          </label>
+          <label>Date d’analyse
+            <input name="date" type="date" required />
+          </label>
+          <label>Langue
+            <select name="output_language"></select>
+          </label>
+          <label>Profondeur de recherche
+            <select name="research_depth"></select>
+          </label>
+        </div>
+        <fieldset>
+          <legend>Équipe d’analystes</legend>
+          <div id="analyst-picks" class="picks"></div>
+        </fieldset>
+        <div class="row">
+          <label>Fournisseur LLM
+            <select name="llm_provider"></select>
+          </label>
+          <label>Modèle rapide (analystes, trader)
+            <select name="quick_think_llm"></select>
+          </label>
+          <label>Modèle profond (managers)
+            <select name="deep_think_llm"></select>
+          </label>
+        </div>
+        <div class="row custom-models hidden">
+          <label>ID modèle rapide
+            <input name="quick_custom" placeholder="ex. gpt-oss:20b" />
+          </label>
+          <label>ID modèle profond
+            <input name="deep_custom" placeholder="ex. deepseek-r1:8b" />
+          </label>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="checkpoint_enabled" />
+          Checkpoints (reprendre une run interrompue)
+        </label>
+        <details>
+          <summary>Portefeuille (optionnel)</summary>
+          <div class="row">
+            <label>Cash
+              <input name="cash" type="number" step="any" placeholder="100000" />
+            </label>
+            <label>Devise
+              <input name="currency" placeholder="USD" />
+            </label>
+            <label>Position actuelle (ticker, qty, prix)
+              <input name="position" placeholder="NVDA, 50, 120.4" />
+            </label>
+          </div>
+        </details>
+        <div class="actions">
+          <button type="submit" class="primary">Lancer l’analyse</button>
+          <p class="muted" id="analyze-status"></p>
+        </div>
+      </form>
+    </section>
+
+    <section id="view-warroom" class="view">
+      <div class="war-head">
+        <div>
+          <p class="kicker" id="war-kicker">Aucune run</p>
+          <h2 id="war-title">Salle des marchés</h2>
+        </div>
+        <div class="stats" id="war-stats"></div>
+      </div>
+      <div class="firm" id="firm"></div>
+      <div class="split war-body">
+        <article class="panel log-panel">
+          <h2>Fil d’exécution</h2>
+          <div id="message-log" class="log"></div>
+        </article>
+        <article class="panel report-panel">
+          <div class="tabs" id="report-tabs"></div>
+          <div id="report-body" class="prose"></div>
+        </article>
+      </div>
+      <aside class="decision-strip" id="decision-strip" hidden>
+        <span class="kicker">Décision finale</span>
+        <strong id="decision-rating"></strong>
+        <p id="decision-excerpt"></p>
+      </aside>
+    </section>
+
+    <section id="view-reports" class="view">
+      <div class="split">
+        <article class="panel">
+          <h2>Archive</h2>
+          <div id="report-list" class="list"></div>
+        </article>
+        <article class="panel">
+          <h2 id="report-open-title">Rapport</h2>
+          <iframe id="report-frame" hidden title="Rapport HTML"></iframe>
+          <div id="report-fallback" class="prose muted">Choisissez un rapport à gauche.</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-backtest" class="view">
+      <form id="backtest-form" class="sheet">
+        <div class="row">
+          <label>Tickers (virgules)
+            <input name="tickers" placeholder="NVDA,AAPL" required />
+          </label>
+          <label>Début
+            <input name="start" type="date" required />
+          </label>
+          <label>Fin
+            <input name="end" type="date" required />
+          </label>
+          <label>Tous les n jours
+            <input name="every" type="number" value="7" min="1" />
+          </label>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Lancer le backtest</button>
+          <p class="muted">Chaque cellule relance le graphe CLI. Ça peut être long.</p>
+        </div>
+      </form>
+      <article class="panel">
+        <h2>Résultat</h2>
+        <pre id="backtest-out" class="log">En attente d’un sweep.</pre>
+      </article>
+    </section>
+
+    <section id="view-settings" class="view">
+      <article class="panel">
+        <h2>Fournisseur et modèles par défaut</h2>
+        <form id="settings-form" class="sheet compact">
+          <div class="row">
+            <label>TRADINGAGENTS_LLM_PROVIDER
+              <input name="TRADINGAGENTS_LLM_PROVIDER" />
+            </label>
+            <label>Quick model
+              <input name="TRADINGAGENTS_QUICK_THINK_LLM" />
+            </label>
+            <label>Deep model
+              <input name="TRADINGAGENTS_DEEP_THINK_LLM" />
+            </label>
+            <label>OLLAMA_BASE_URL
+              <input name="OLLAMA_BASE_URL" placeholder="http://localhost:11434/v1" />
+            </label>
+          </div>
+          <h3>Clés API</h3>
+          <div id="key-fields" class="row wrap"></div>
+          <div class="actions">
+            <button type="submit" class="primary">Enregistrer dans .env</button>
+            <p class="muted" id="settings-status"></p>
+          </div>
+        </form>
+      </article>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

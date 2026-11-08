@@ -1,0 +1,33 @@
+name: Bug
+description: Quelque chose casse — CLI, graphe ou TradingDesk
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options: [TradingDesk, CLI, Graphe / agents, Données / vendors, Backtest, Docs]
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Attendu
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Observé (traceback ou capture)
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Env
+      placeholder: "Windows 11, Python 3.13, Ollama / OpenAI, commit …"
+  - type: markdown
+    attributes:
+      value: |
+        Les bugs de date / vendor / graphe sont souvent **upstream**. Signalez-les aussi à [TauricResearch/TradingAgents](https://github.com/TauricResearch/TradingAgents/issues) si le CLI seul les reproduit.
